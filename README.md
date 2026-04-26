@@ -6,6 +6,18 @@ Built as a personal tool to move from messy notes to structured logging, basic v
 
 ---
 
+## Screenshots
+
+| Dashboard | Add Workout | History |
+|:---------:|:-----------:|:-------:|
+| ![Dashboard](screenshots/dashboard.png) | ![Add Workout](screenshots/add_workout.png) | ![History](screenshots/history.png) |
+
+| Body Metrics | Reports |
+|:------------:|:-------:|
+| ![Body Metrics](screenshots/metrics.png) | ![Reports](screenshots/reports.png) |
+
+---
+
 ## Features
 
 - **Dashboard** — latest weight, waist, body fat %, weekly session count and calorie total, last workout date

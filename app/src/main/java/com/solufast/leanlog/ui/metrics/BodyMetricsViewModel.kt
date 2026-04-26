@@ -74,19 +74,23 @@ class BodyMetricsViewModel(application: Application) : AndroidViewModel(applicat
         recalcNavy()
     }
 
-    // US Navy body fat formula (male):
-    //   BF% = 86.010 * log10(waist - neck) - 70.041 * log10(height) + 36.76
-    // Female: requires hip measurement — not included in MVP, use male formula as fallback.
+    // US Navy body fat formula (male), inputs in cm converted to inches:
+    //   BF% = 86.010 * log10(waist_in - neck_in) - 70.041 * log10(height_in) + 36.76
+    // 1 inch = 2.54 cm. Female variant requires hip measurement — not in MVP.
     private fun recalcNavy() {
         val f = _formState.value
-        val waist = f.waistCm.toDoubleOrNull() ?: return
-        val neck = f.neckCm.toDoubleOrNull() ?: return
-        val height = f.heightCm.toDoubleOrNull() ?: return
+        val waistCm = f.waistCm.toDoubleOrNull() ?: return
+        val neckCm = f.neckCm.toDoubleOrNull() ?: return
+        val heightCm = f.heightCm.toDoubleOrNull() ?: return
 
-        if (waist <= neck || height <= 0) {
+        if (waistCm <= neckCm || heightCm <= 0) {
             _formState.value = _formState.value.copy(navyBfEstimate = null)
             return
         }
+
+        val waist = waistCm / 2.54
+        val neck = neckCm / 2.54
+        val height = heightCm / 2.54
 
         val bf = 86.010 * log10(waist - neck) - 70.041 * log10(height) + 36.76
         val clamped = bf.coerceIn(1.0, 60.0)
